@@ -3,6 +3,15 @@ from django.db import models
 from django.urls import reverse
 from accounts.models import CustomUser
 
+
+
+
+class Treatments(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(default="")
+
+    def __str__(self):
+        return self.name
 class AppointmentStatuse(models.Model):
     status = models.CharField(max_length=255)
 
@@ -26,4 +35,19 @@ class Appointment(models.Model):
 
     def get_absolute_url(self):
         return reverse('appointment_detail', args=[str(self.id)])
+
+
+
+
+class AppointmentTreatment(models.Model):
+    treatment=models.ForeignKey(Treatments, on_delete=models.SET_NULL, null=True)
+    appointment=models.ForeignKey(Appointment, on_delete=models.SET_NULL, null=True)
+
+
+
+
+
+
+
+
 
