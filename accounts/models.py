@@ -30,6 +30,9 @@ class CustomUserManager(BaseUserManager):
     def patients(self):
         return self.filter(role__role_name='Patient')
 
+    def secretaries(self):
+        return self.filter(role__role_name='Secretary')
+
     def create_user(self, username, email=None, password=None, **extra_fields):
         if not username:
             raise ValueError("The Username field must be set")
@@ -52,15 +55,16 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
-    phone_num = models.CharField(max_length=255, default="unknown")
-    date_of_birth = models.DateField(null=True)
+    photo = models.CharField(max_length=255, blank=True, default=" ")
+    phone_num = models.CharField(max_length=255, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
     gender = models.ForeignKey(UserGender, on_delete=models.SET_NULL, null=True, blank=True)
     role = models.ForeignKey(UserRole, on_delete=models.CASCADE, null=True)
     insurance = models.ForeignKey(UserInsurance, on_delete=models.SET_NULL, null=True, blank=True)
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.username
+        return self.first_name
 
 
 

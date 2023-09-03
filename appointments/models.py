@@ -9,6 +9,13 @@ class AppointmentStatuse(models.Model):
     def __str__(self):
         return self.status
 
+
+class Treatment(models.Model):
+    treatment_name = models.CharField(max_length=255, blank=True, default=" ")
+
+    def __str__(self):
+        return self.treatment_name
+
 class Appointment(models.Model):
 
     Appointment_date = models.DateField(null=True)
@@ -16,6 +23,7 @@ class Appointment(models.Model):
     Appointment_status = models.ForeignKey(AppointmentStatuse, on_delete=models.SET_NULL, null=True)
     notes = models.CharField(max_length=255, default="empty")
     payment = models.IntegerField(default=0)
+    treatment = models.ForeignKey(Treatment, on_delete=models.SET_NULL, null=True)
     doctor = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='doctor_appointments',
         limit_choices_to={'role__role_name': 'Doctor'})
     patient = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='patient_appointments',

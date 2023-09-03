@@ -29,7 +29,14 @@ env = environ.Env(
     DATABASE_PASSWORD=(str, ""),
     DATABASE_HOST=(str, ""),
     DATABASE_PORT=(int, 5432),
-    SECRET_KEY=(str, " ")
+    SECRET_KEY=(str, " "),
+    EMAIL_BACKEND=(str, " "),
+    EMAIL_HOST=(str, " "),
+    EMAIL_PORT=(int, " "),
+    EMAIL_USE_TLS=(bool, True),
+    EMAIL_USE_SSL=(bool, False),
+    EMAIL_HOST_USER=(str, " "),
+    EMAIL_HOST_PASSWORD=(str, " "),
 )
 
 environ.Env.read_env()
@@ -44,6 +51,14 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = tuple(env.list("ALLOWED_HOSTS"))
+CSRF_TRUSTED_ORIGINS = tuple(env.list("ALLOWED_ORIGINS"))
+EMAIL_BACKEND = env.str("EMAIL_BACKEND")
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/

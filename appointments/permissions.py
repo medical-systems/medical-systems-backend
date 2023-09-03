@@ -1,16 +1,7 @@
-from rest_framework import permissions
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
-
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IsAppointmentOwnerOrSecretary(BasePermission):
     def has_object_permission(self, request, view, obj):
-
-        # hover over SAFE_METHODS to see which qualify
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
-        # if we're allowing the purchaser to be null in Model
-        # then this will check for that case and allow access
-        if obj.owner is None:
-            return True
-
-        return obj.owner == request.user
+        if obj.patient == request.user or obj.doctor == request.user or request.user.role.role_name == "Secretary":
+                return True
+        return False

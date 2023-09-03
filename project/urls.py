@@ -18,6 +18,7 @@ from django.urls import include, path
 from rest_framework_simplejwt import views as jwt_views
 from .views import MyTokenObtainPairView
 from django.views.generic.base import TemplateView
+from accounts.views import StaticTablesInfoView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -38,4 +39,5 @@ urlpatterns = [
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("static_tables_info/", StaticTablesInfoView.as_view(), name="static_tables_info"),
 ]
