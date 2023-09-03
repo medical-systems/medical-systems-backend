@@ -10,6 +10,19 @@ class AllUserInfoSerializer(serializers.ModelSerializer):
         fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "insurance"]
 
 
+class DoctorListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role"]
+
+
+class PatientListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "insurance"]
+
+
+
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
