@@ -1,9 +1,9 @@
 from django.urls import reverse_lazy
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from .models import CustomUser, UserInsurance, UserGender
-from appointments.models import AppointmentStatuse
+from appointments.models import AppointmentStatuse, Treatment
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializer import UserInfoSerializer, AllUserInfoSerializer, CustomUserSerializer, GenderSerializer, InsuranceSerializer, AppointmentStatusSerializer
+from .serializer import UserInfoSerializer, AllUserInfoSerializer, CustomUserSerializer, GenderSerializer, InsuranceSerializer, AppointmentStatusSerializer, TreatmentSerializer
 from .permissions import IsAccountOwnerOrSecretary
 from rest_framework.generics import CreateAPIView
 from rest_framework import status
@@ -54,16 +54,19 @@ class StaticTablesInfoView(APIView):
         all_genders = UserGender.objects.all()
         all_insurances = UserInsurance.objects.all()
         all_appointment_statuses = AppointmentStatuse.objects.all()
+        all_treatments = Treatment.objects.all()
 
         gender_serializer = GenderSerializer(all_genders, many = True)
         insurance_serializer = InsuranceSerializer(all_insurances, many = True)
         appointment_status_serializer = AppointmentStatusSerializer(all_appointment_statuses, many = True)
+        treatment_serializer = TreatmentSerializer(all_treatments, many = True)
 
 
         response_data = {
                 "genders": gender_serializer.data,
                 "insurances": insurance_serializer.data,
                 "appointment_statuses": appointment_status_serializer.data,
+                "treatments": treatment_serializer.data,
             }
 
         return Response(response_data)

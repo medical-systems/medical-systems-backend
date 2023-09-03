@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser, UserRole, UserInsurance, UserGender
-from appointments.models import AppointmentStatuse
+from appointments.models import AppointmentStatuse, Treatment
 from django.contrib.auth import get_user_model
 
 
@@ -19,7 +19,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ("username", "email", "password", "confirm_password", "role")
+        fields = ("username", "email", "password", "confirm_password", "first_name", "last_name", "role", "phone_num", "date_of_birth", "gender", "insurance")
 
     confirm_password = serializers.CharField(write_only=True)
 
@@ -38,6 +38,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             password=validated_data["password"],
             role=patient_role,
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+            phone_num=validated_data["phone_num"],
+            date_of_birth=validated_data["date_of_birth"],
+            gender=validated_data["gender"],
+            insurance=validated_data["insurance"],
         )
         return user
 
@@ -45,14 +51,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class GenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserGender
-        fields = ["gender"]
+        fields = ["id", "gender"]
 
 class InsuranceSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInsurance
-        fields = ["insurance_name"]
+        fields = ["id", "insurance_name"]
 
 class AppointmentStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppointmentStatuse
-        fields = ["status"]
+        fields = ["id", "status"]
+
+class TreatmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Treatment
+        fields = ["id", "treatment_name"]
