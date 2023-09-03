@@ -7,13 +7,13 @@ from django.contrib.auth import get_user_model
 class AllUserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "insurance"]
+        fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "insurance", "about_doctor"]
 
 
 class DoctorListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role"]
+        fields = ["id", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "about_doctor"]
 
 
 class PatientListSerializer(serializers.ModelSerializer):
@@ -26,10 +26,10 @@ class PatientListSerializer(serializers.ModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ["id", "photo", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "insurance"]
+        fields = ["id", "photo", "first_name", "last_name", "username", "email", "phone_num", "date_of_birth", "gender", "role", "insurance", "about_doctor"]
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ("username", "email", "password", "confirm_password", "first_name", "last_name", "role", "phone_num", "date_of_birth", "gender", "insurance")

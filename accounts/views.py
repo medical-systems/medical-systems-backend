@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from .models import CustomUser, UserInsurance, UserGender, UserRole
 from appointments.models import AppointmentStatuse, Treatment
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializer import UserInfoSerializer, AllUserInfoSerializer, CustomUserSerializer, GenderSerializer, InsuranceSerializer, AppointmentStatusSerializer, TreatmentSerializer, DoctorListSerializer, PatientListSerializer
+from .serializer import UserInfoSerializer, AllUserInfoSerializer, SignUpSerializer, GenderSerializer, InsuranceSerializer, AppointmentStatusSerializer, TreatmentSerializer, DoctorListSerializer, PatientListSerializer
 from .permissions import IsAccountOwnerOrSecretary
 from rest_framework.generics import CreateAPIView
 from rest_framework import status
@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 
 class SignUpView(CreateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = SignUpSerializer
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
@@ -50,15 +50,10 @@ class AccountDetail(RetrieveUpdateDestroyAPIView):
 class DoctorListView(ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = DoctorListSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
-
-        user = self.request.user
-        if user.is_authenticated and hasattr(user, 'role') and hasattr(user.role, 'role_name'):
-            return CustomUser.objects.filter(role=UserRole.objects.get(role_name="Doctor"))
-        else:
-            return CustomUser.objects.none()
+        return CustomUser.objects.filter(role=UserRole.objects.get(role_name="Doctor"))
 
 
 class PatientListView(ListAPIView):
