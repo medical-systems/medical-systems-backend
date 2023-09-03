@@ -40,4 +40,5 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("static_tables_info/", StaticTablesInfoView.as_view(), name="static_tables_info"),
+    path('auth/', include('djoser.urls')),
 ]
