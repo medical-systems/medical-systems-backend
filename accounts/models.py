@@ -61,6 +61,7 @@ class CustomUser(AbstractUser):
     gender = models.ForeignKey(UserGender, on_delete=models.SET_NULL, null=True, blank=True)
     role = models.ForeignKey(UserRole, on_delete=models.CASCADE, null=True)
     insurance = models.ForeignKey(UserInsurance, on_delete=models.SET_NULL, null=True, blank=True)
+    about_doctor = models.CharField(max_length=255, blank=True, default=" ")
     objects = CustomUserManager()
 
     def __str__(self):
