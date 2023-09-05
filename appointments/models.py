@@ -22,7 +22,7 @@ class Appointment(models.Model):
     Appointment_time = models.TimeField(null=True)
     Appointment_status = models.ForeignKey(AppointmentStatuse, on_delete=models.SET_NULL, null=True)
     notes = models.CharField(max_length=255, default="empty", blank=True, null=True)
-    payment = models.IntegerField(default=0)
+    payment = models.IntegerField(default=0, blank=True)
     treatment = models.ForeignKey(Treatment, on_delete=models.SET_NULL, null=True)
     doctor = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='doctor_appointments',
         limit_choices_to={'role__role_name': 'Doctor'})
